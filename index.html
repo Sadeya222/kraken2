@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kraken Seafood Kitchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Color Variables */
+        :root {
+            --white: #FFFFFF;
+            --dark-chocolate: #1E120B;
+            --kraken-blue: #00AEEF;
+            --gray-light: #F5F5F5;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-chocolate);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .preloader.fade-out {
+            opacity: 0;
+        }
+
+        .preloader-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-chocolate);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        nav.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+        
+            /* This is where the logo image will be added */
+            width: 150px;
+            height: 50px;
+           
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-chocolate);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--kraken-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8%;
+            background-color: var(--white);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--dark-chocolate);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--dark-chocolate);
+            opacity: 0.8;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--kraken-blue);
+            color: var(--white);
+            padding: 15px 35px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border: none;
+            transition: background-color 0.3s ease;
+            width: fit-content;
+        }
+
+        .hero-btn:hover {
+            background-color: var(--dark-chocolate);
+        }
+
+        .hero-right {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Signature Gallery */
+        .signature {
+            padding: 100px 0;
+            background-color: var(--gray-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: var(--dark-chocolate);
+        }
+
+        .gallery-container {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 30px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .gallery-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gallery-card {
+            flex: 0 0 300px;
+            margin-right: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .gallery-card:hover {
+            border-color: var(--dark-chocolate);
+            transform: translateY(-10px);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-content {
+            padding: 20px;
+            background-color: var(--white);
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-chocolate);
+        }
+
+        .gallery-price {
+            font-size: 1.2rem;
+            color: var(--kraken-blue);
+            font-weight: 600;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 100px 0;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .menu-column {
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .menu-item {
+            margin-bottom: 30px;
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu-item-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark-chocolate);
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item-price {
+            font-size: 1.4rem;
+            color: var(--kraken-blue);
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .menu-item-description {
+            font-size: 1rem;
+            color: var(--dark-chocolate);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .chef-special {
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .chef-special-icon {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 30px;
+            height: 30px;
+            color: var(--kraken-blue);
+        }
+
+        /* Our Story Section */
+        .story {
+            padding: 100px 0;
+            background-color: var(--dark-chocolate);
+            color: var(--white);
+            position: relative;
+        }
+
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .story-text {
+            padding: 20px;
+        }
+
+        .story-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+
+        .story-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .story-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            border-left: 4px solid var(--kraken-blue);
+            padding-left: 20px;
+            margin-top: 40px;
+        }
+
+        .story-image {
+            position: relative;
+            margin-right: -30px;
+            margin-top: -30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .story-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Interactive Build Your Basket */
+        .basket {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+
+        .basket-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .basket-content {
+            padding: 20px;
+        }
+
+        .basket-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--dark-chocolate);
+        }
+
+        .basket-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--dark-chocolate);
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .fish-options {
+            margin-bottom: 30px;
+        }
+
+        .fish-toggle {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .fish-option {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background-color: var(--gray-light);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .fish-option:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .fish-option:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+
+        .fish-option.active {
+            background-color: var(--kraken-blue);
+            color: var(--white);
+        }
+
+        .fish-price {
+            font-size: 2rem;
+            color: var(--kraken-blue);
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .basket-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--dark-chocolate);
+            padding: 15px 35px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border: 2px solid var(--kraken-blue);
+            transition: all 0.3s ease;
+        }
+
+        .basket-btn:hover {
+            background-color: var(--kraken-blue);
+            color: var(--white);
+        }
+
+        .basket-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 400px;
+        }
+
+        .basket-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-chocolate);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-description {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .social-links li {
+            margin-right: 15px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--kraken-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .menu-grid, .story-content, .basket-container, .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .story-image {
+                margin-right: 0;
+                margin-top: 30px;
+            }
+
+            .hero {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .hero-left, .hero-right {
+                flex: none;
+                height: 50vh;
+            }
+
+            .hero-left {
+                padding: 50px 5%;
+            }
+
+            .hero-right {
+                height: 50vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .menu-column {
+                padding: 20px;
+            }
+
+            .menu-item-title {
+                font-size: 1.5rem;
+            }
+
+            .menu-item-price {
+                font-size: 1.2rem;
+            }
+
+            .story-title, .basket-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-logo">KRAKEN</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+              <div class="logo">
+           <img src="./logo image.jpg" alt="Kraken Seafood Kitchen" style="width: 100%; height: 100%; object-fit: contain;"> 
+            
+        </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#signature">Signature</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#story">Our Story</a></li>
+                <li><a href="#basket">Basket</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-left">
+            <h1 class="hero-title">A Feast Beyond the Deep</h1>
+            <p class="hero-subtitle">Experience the finest seafood from the ocean's depths, prepared with culinary mastery</p>
+            <a href="#menu" class="hero-btn">Explore Menu</a>
+        </div>
+        <div class="hero-right">
+            <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Asian Chili Crab" class="hero-image">
+        </div>
+    </section>
+
+    <!-- Signature Gallery -->
+    <section id="signature" class="signature">
+        <div class="container">
+            <h2 class="section-title">Our Signature Dishes</h2>
+            <div class="gallery-container">
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1553247407-23251ce81f59?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Lobster Mornay Roll" class="gallery-image">
+                    <div class="gallery-content">
+                        <h3 class="gallery-title">Lobster Mornay Roll</h3>
+                        <p class="gallery-price">$25.00</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Grilled Octopus" class="gallery-image">
+                    <div class="gallery-content">
+                        <h3 class="gallery-title">Grilled Octopus</h3>
+                        <p class="gallery-price">$31.90</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Seafood Platter" class="gallery-image">
+                    <div class="gallery-content">
+                        <h3 class="gallery-title">Seafood Platter Grill</h3>
+                        <p class="gallery-price">$99.90</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1625943553852-781c6dd46faa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Chili Mussels" class="gallery-image">
+                    <div class="gallery-content">
+                        <h3 class="gallery-title">Chili Mussels (1kg)</h3>
+                        <p class="gallery-price">$31.90</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2 class="section-title">Curated Catch</h2>
+            <div class="menu-grid">
+                <div class="menu-column">
+                    <div class="menu-item">
+                        <h3 class="menu-item-title">Seafood Platter Grill <span class="menu-item-price">$99.90</span></h3>
+                        <p class="menu-item-description">A premium selection of the finest seafood including lobster, prawns, scallops, and fish, grilled to perfection with our signature herbs and spices.</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 class="menu-item-title">Lobster Mornay Roll <span class="menu-item-price">$25.00</span></h3>
+                        <p class="menu-item-description">Fresh lobster meat in a creamy mornay sauce, served in a toasted brioche bun with a side of crispy fries.</p>
+                    </div>
+                </div>
+                <div class="menu-column">
+                    <div class="menu-item">
+                        <h3 class="menu-item-title">Chili Mussels (1kg) <span class="menu-item-price">$31.90</span></h3>
+                        <p class="menu-item-description">Fresh mussels steamed in a rich, spicy tomato and chili sauce, served with crusty bread to soak up the flavors.</p>
+                    </div>
+                    <div class="menu-item chef-special">
+                        <i class="fas fa-anchor chef-special-icon"></i>
+                        <h3 class="menu-item-title">Grilled Octopus <span class="menu-item-price">$31.90</span></h3>
+                        <p class="menu-item-description">Tender octopus grilled to perfection, served with roasted potatoes, olives, and a drizzle of lemon olive oil.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story" class="story">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text">
+                    <h2 class="story-title">Our Story</h2>
+                    <p class="story-description">Founded in 2015, Kraken Seafood Kitchen began as a small family venture with a simple mission: to bring the freshest, most exquisite seafood from the ocean directly to your plate. Our journey started with a single fishing boat and a passion for culinary excellence.</p>
+                    <p class="story-description">Today, we source our seafood from sustainable fisheries and local fishermen who share our commitment to quality and environmental responsibility. Every dish we create is a testament to our respect for the ocean and its bounty.</p>
+                    <div class="story-quote">"We don't just cook seafood; we master the elements of the deep."</div>
+                </div>
+                <div class="story-image">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Our Kitchen Team">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Build Your Basket -->
+    <section id="basket" class="basket">
+        <div class="container">
+            <h2 class="section-title">Build Your Basket</h2>
+            <div class="basket-container">
+                <div class="basket-content">
+                    <h3 class="basket-title">Seafood Basket</h3>
+                    <p class="basket-description">Create your perfect seafood basket by selecting your preferred fish type. Each basket comes with crispy chips, tartare sauce, and fresh lemon.</p>
+                    
+                    <div class="fish-options">
+                        <p style="margin-bottom: 15px; font-weight: 500;">Select your fish:</p>
+                        <div class="fish-toggle">
+                            <div class="fish-option active" data-fish="barramundi">Barramundi</div>
+                            <div class="fish-option" data-fish="snapper">Gold Band Snapper</div>
+                            <div class="fish-option" data-fish="flathead">Flathead</div>
+                        </div>
+                    </div>
+                    
+                    <p class="fish-price">$37.90</p>
+                    <a href="#" class="basket-btn">Add to Order</a>
+                </div>
+                <div class="basket-image">
+                    <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Barramundi" id="fish-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="logo">
+           <img src="./logo image.jpg" alt="Kraken Seafood Kitchen" style="width: 100%; height: 100%; object-fit: contain;"> 
+            
+        </div>
+                    <p class="footer-description">Experience the finest seafood from the ocean's depths, prepared with culinary mastery and served with passion.</p>
+                    <ul class="social-links">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#signature">Signature</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#story">Our Story</a></li>
+                        <li><a href="#basket">Basket</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> 123 Ocean Avenue, Sydney</li>
+                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> +61 2 1234 5678</li>
+                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@kraken.com.au</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Kraken Seafood Kitchen. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.querySelector('.preloader');
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Parallax effect for hero image
+        window.addEventListener('scroll', () => {
+            const heroImage = document.querySelector('.hero-image');
+            const scrollPosition = window.pageYOffset;
+            
+            if (scrollPosition < window.innerHeight) {
+                heroImage.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Fish selection toggle
+        const fishOptions = document.querySelectorAll('.fish-option');
+        const fishImage = document.getElementById('fish-image');
+        
+        const fishImages = {
+            barramundi: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            snapper: 'https://images.unsplash.com/photo-1534043464124-3be32fe000c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            flathead: 'https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        };
+        
+        fishOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                fishOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                option.classList.add('active');
+                
+                // Change fish image with fade effect
+                fishImage.style.opacity = 0;
+                
+                setTimeout(() => {
+                    const fishType = option.getAttribute('data-fish');
+                    fishImage.src = fishImages[fishType];
+                    fishImage.style.opacity = 1;
+                }, 300);
+            });
+        });
+
+        // Horizontal scroll for gallery (mouse wheel)
+        const gallery = document.querySelector('.gallery-container');
+        
+        gallery.addEventListener('wheel', (e) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                gallery.scrollLeft += e.deltaY;
+            }
+        });
+    </script>
+</body>
+</html>
